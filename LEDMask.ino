@@ -33,19 +33,13 @@ void setup() {
   pinMode(7, INPUT);
   pinMode(8, INPUT);
   pinMode(9, INPUT);
-  pinMode(14, INPUT);     // Analog input pin, for use with 'Fancy Mask'
   strip.begin();
-  strip.show(); // Initialize all pixels to 'off'
+  strip.show();           // Initialize all pixels to 'off'
   Serial.begin(9600);
   
 }
 
 void loop() {
-
-  analogInput = analogRead(14);
-
-while (1 == 1) {               // placeholder while loop - to be used for reading analog inputs
-
 
 switch2 = digitalRead(2);
 switch3 = digitalRead(3);
@@ -55,7 +49,6 @@ switch8 = digitalRead(8);
 switch9 = digitalRead(9);
 
 
- 
 if (switch2 == HIGH) {
    twinkle(white);
    Serial.println("white twinkle");
@@ -89,7 +82,6 @@ else if (switch9 == HIGH) {
 else {
   solid(off);
   }
-}
 
 }
 
@@ -137,7 +129,7 @@ void solid(uint32_t c) {
 
 
 
-// OTHER FUNCTIONS FROM EXAMPLE CODE:
+// OTHER - CURRENTLY UNUSED - FUNCTIONS FROM THE EXAMPLE CODE:
 
 /*
 
