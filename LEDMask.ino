@@ -19,6 +19,7 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(96, PIN, NEO_GRB + NEO_KHZ800);
 const uint32_t white = strip.Color(127, 127, 127);
 const uint32_t red = strip.Color(255, 0, 0);
 const uint32_t off = strip.Color(0, 0, 0);
+
 int switch2 = 0;
 int switch3 = 0;
 int switch4 = 0;
@@ -35,7 +36,7 @@ void setup() {
   pinMode(9, INPUT);
   strip.begin();
   strip.show();           // Initialize all pixels to 'off'
-  Serial.begin(9600);
+  Serial.begin(9600);     // Useful for troubleshooting and debug - not needed for production version
   
 }
 
@@ -51,7 +52,7 @@ switch9 = digitalRead(9);
 
 if (switch2 == HIGH) {
    twinkle(white);
-   Serial.println("white twinkle");
+   Serial.println("white twinkle");  // Useful for troubleshooting and debug - not needed for production version
   }
 
 else if (switch3 == HIGH) {
@@ -100,10 +101,10 @@ else {
 
 //Theatre-style crawling lights.
 void twinkle(uint32_t c) {
-  for (int j=0; j<1; j++) {  //do 10 cycles of chasing
+  for (int j=0; j<1; j++) {              // Only one cycle - loop() keeps it running
     for (int q=0; q < 3; q++) {
       for (int i=0; i < strip.numPixels(); i=i+3) {
-        strip.setPixelColor(i+q, c);    //turn every third pixel on
+        strip.setPixelColor(i+q, c);     //turn every third pixel on
       }
       strip.show();
      
@@ -116,7 +117,7 @@ void twinkle(uint32_t c) {
   }
 }
 
-void solid(uint32_t c) {
+void solid(uint32_t c) {                        // Sets all pixels to same color, solid on.
   for (int i=0; i<strip.numPixels(); i++) {
     strip.setPixelColor(i, c);
   }
