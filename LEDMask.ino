@@ -40,6 +40,29 @@ void setup() {
   
 }
 
+void pulse(uint32_t c, int time = 2000) {       // Pulses full mask as one color. Default is 1 second per cycle - delay time is in MICROSECONDS!
+  for (int i=0; i<strip.numPixels(); i++) {
+    strip.setPixelColor(i, c);
+    }
+
+  for (int j=0; j<256; j++) {                   // Fades from 0 to 256, with a delay 'time' between steps
+    strip.setBrightness(j);
+    strip.show();
+    delayMicroseconds(time);
+  }
+
+delay(5);
+
+  for (int j=256; j>0; j--) {                   // Fades from 256 back down to 0, with a delay 'time' between steps
+    strip.setBrightness(j);
+    strip.show();
+    delayMicroseconds(time);
+  }
+
+
+  }
+
+
 void loop() {
 
 switch2 = digitalRead(2);
@@ -71,8 +94,8 @@ else if (switch7 == HIGH) {
   }
 
 else if (switch8 == HIGH) {
-   solid(off);
-   Serial.println("8 off");
+   pulse(red);
+   Serial.println("pulse red");
   }
 
 else if (switch9 == HIGH) {
@@ -111,7 +134,7 @@ void twinkle(uint32_t c) {
       delay(150);
      
       for (int i=0; i < strip.numPixels(); i=i+3) {
-        strip.setPixelColor(i+q, 0);        //turn every third pixel off
+        strip.setPixelColor(i+q, 0);             //turn every third pixel off
       }
     }
   }
@@ -123,6 +146,12 @@ void solid(uint32_t c) {                        // Sets all pixels to same color
   }
     strip.show();
 }
+
+
+
+
+
+
 
 
 
