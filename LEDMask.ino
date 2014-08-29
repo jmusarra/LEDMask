@@ -18,6 +18,7 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(96, PIN, NEO_GRB + NEO_KHZ800);
 
 const uint32_t white = strip.Color(127, 127, 127);
 const uint32_t red = strip.Color(255, 0, 0);
+const uint32_t blue = strip.Color(0, 0, 255);
 const uint32_t off = strip.Color(0, 0, 0);
 
 int switch2 = 0;
@@ -44,6 +45,8 @@ void pulse(uint32_t c, int time = 2000) {       // Pulses full mask as one color
   for (int i=0; i<strip.numPixels(); i++) {
     strip.setPixelColor(i, c);
     }
+
+// TODO: determine current intensity before beginning fade. If at full, begin pulse with fadeout. If at zero, begin with fadeup.
 
   for (int j=0; j<256; j++) {                   // Fades from 0 to 256, with a delay 'time' between steps
     strip.setBrightness(j);
@@ -94,7 +97,7 @@ else if (switch7 == HIGH) {
   }
 
 else if (switch8 == HIGH) {
-   pulse(red);
+   pulse(red, 1953);
    Serial.println("pulse red");
   }
 
@@ -140,19 +143,15 @@ void twinkle(uint32_t c) {
   }
 }
 
+
+
+
 void solid(uint32_t c) {                        // Sets all pixels to same color, solid on.
   for (int i=0; i<strip.numPixels(); i++) {
     strip.setPixelColor(i, c);
   }
     strip.show();
 }
-
-
-
-
-
-
-
 
 
 
