@@ -110,17 +110,17 @@ else if (switch3 == HIGH) {
   }   
 
 else if (switch4 == HIGH) {
-   solid(white);
-   Serial.println("white solid");
-  }
-
-else if (switch7 == HIGH) {
    solid(red);
    Serial.println("red solid");
   }
 
+else if (switch7 == HIGH) {
+   solid(blue);
+   Serial.println("blue solid");
+  }
+
 else if (switch8 == HIGH) {
-   pulse(red, 1953);
+   pulse(red, 800);
    Serial.println("pulse red");
   }
 
@@ -157,7 +157,7 @@ void twinkle(uint32_t c) {
       }
       strip.show();
      
-      delay(150);
+      delay(300);
      
       for (int i=0; i < strip.numPixels(); i=i+3) {
         strip.setPixelColor(i+q, 0);             //turn every third pixel off
