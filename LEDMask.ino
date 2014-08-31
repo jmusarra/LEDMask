@@ -20,6 +20,7 @@ const uint32_t white = strip.Color(127, 127, 127);
 const uint32_t red = strip.Color(255, 0, 0);
 const uint32_t blue = strip.Color(0, 0, 255);
 const uint32_t off = strip.Color(0, 0, 0);
+uint8_t brightness = 0;
 
 int switch2 = 0;
 int switch3 = 0;
@@ -36,11 +37,13 @@ void setup() {
   pinMode(8, INPUT);
   pinMode(9, INPUT);
   strip.begin();
+  strip.setBrightness(brightness);
   strip.show();           // Initialize all pixels to 'off'
   Serial.begin(9600);     // Useful for troubleshooting and debug - not needed for production version
+
   
 }
-
+/*
 void pulse(uint32_t c, int time = 2000) {       // Pulses full mask as one color. Default is 1 second per cycle - delay time is in MICROSECONDS!
   for (int i=0; i<strip.numPixels(); i++) {
     strip.setPixelColor(i, c);
@@ -63,26 +66,28 @@ delay(5);
   }
 
 }
+*/
 
 
 void pulse2(uint32_t c, uint8_t fadeStep) {            // Adapted from zbootili's 'rainbowpulse' function: http://forum.arduino.cc/index.php?topic=226932.0
   uint16_t i, j;
-  int fadeControl = 255;                               // will hold the current brightness level
+  //int fadeControl = 255;                               // will hold the current brightness level
   int fadeDirection = -1;                              // change sign to fade up or down
 
   for(j=0; j < 256; j++) {
     for(i=0; i < 20; i++) {
       strip.setPixelColor(i, c);
-      strip.setBrightness(fadeControl);                // set the strip brightness
-      fadeControl = fadeControl + fadeDirection;       // increment the brightness value
+      strip.setBrightness(brightness);                // set the strip brightness
+      brightness = brightness + fadeDirection;       // increment the brightness value
   
-      if (fadeControl < 20 || fadeControl >= 255) {    // If the brightness value has gone past its limits...
+      if (brightness < 20 || brightness >= 255) {    // If the brightness value has gone past its limits...
         fadeDirection = fadeDirection * -1;            // change the direction...
-        fadeControl = fadeControl + fadeDirection;     // ...and start back.
+        brightness = brightness + fadeDirection;     // ...and start back.
       }
     }
    
     strip.show();
+    Serial.println(brightness);
     delay(fadeStep);                                   // wait a bit before doing it again.
 
   }
@@ -101,32 +106,32 @@ switch9 = digitalRead(9);
 
 if (switch2 == HIGH) {
    twinkle(white);
-   Serial.println("white twinkle");  // Useful for troubleshooting and debug - not needed for production version
+   Serial.println("Switch 2 - white twinkle");  // Useful for troubleshooting and debug - not needed for production version
   }
 
 else if (switch3 == HIGH) {
    twinkle(red);
-   Serial.println("red twinkle");
+   Serial.println("Switch 3 - red twinkle");
   }   
 
 else if (switch4 == HIGH) {
    solid(white);
-   Serial.println("white solid");
+   Serial.println("Switch 4 - white solid");
   }
 
 else if (switch7 == HIGH) {
    solid(red);
-   Serial.println("red solid");
+   Serial.println("Switch 7 - red solid");
   }
 
 else if (switch8 == HIGH) {
-   pulse(red, 1953);
-   Serial.println("pulse red");
+   pulse2(red, 10);
+   Serial.println("Switch 8 - pulse red");
   }
 
 else if (switch9 == HIGH) {
    solid(off);
-   Serial.println("9 off");
+   Serial.println("Switch 9 - off");
   }
 
 else {
@@ -173,6 +178,8 @@ void solid(uint32_t c) {                        // Sets all pixels to same color
     strip.setPixelColor(i, c);
   }
     strip.show();
+    Serial.print("Current color is");
+    Serial.println(c);
 }
 
 
