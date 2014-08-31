@@ -70,20 +70,20 @@ void pulse2(uint32_t c, uint8_t fadeStep) {            // Adapted from zbootili'
   int fadeControl = 255;                               // will hold the current brightness level
   int fadeDirection = -1;                              // change sign to fade up or down
 
-  for(j=0; j<256; j++) {
-    for(i=0; i<20; i++) {
+  for(j=0; j < 256; j++) {
+    for(i=0; i < 20; i++) {
       strip.setPixelColor(i, c);
       strip.setBrightness(fadeControl);                // set the strip brightness
       fadeControl = fadeControl + fadeDirection;       // increment the brightness value
   
-      if (fadeControl <20 || fadeControl >= 255) {     // If the brightness value has gone past its limits...
+      if (fadeControl < 20 || fadeControl >= 255) {    // If the brightness value has gone past its limits...
         fadeDirection = fadeDirection * -1;            // change the direction...
         fadeControl = fadeControl + fadeDirection;     // ...and start back.
+      }
     }
- }
    
-  strip.show();
-  delay(fadeStep);                                     // wait a bit before doing it again.
+    strip.show();
+    delay(fadeStep);                                   // wait a bit before doing it again.
 
   }
 }
