@@ -29,6 +29,9 @@ int switch7 = 0;
 int switch8 = 0;
 int switch9 = 0;
 
+uint16_t timer = 1;
+uint32_t now = millis();
+
 void setup() {
   pinMode(2, INPUT);
   pinMode(3, INPUT);
@@ -71,22 +74,21 @@ delay(5);
 //############################___ PULSE 2 ___################################
 void pulse2(uint32_t c, uint16_t fadeStep) {        // Adapted from zbootili's 'rainbowpulse' function: http://forum.arduino.cc/index.php?topic=226932.0
   uint8_t i, j;
-  //int fadeControl = 255;                          // will hold the current brightness level
   int fadeDirection = -1;                           // change sign to fade up or down
 
-  for(j=brightness; j < 256; j++) {
+  for(j=0; j < 256; j++) {
     for(i=0; i < strip.numPixels(); i++) {
       strip.setPixelColor(i, c);
-      strip.setBrightness(j);                       // set the strip brightness
-      Serial.print("brightness is: ");
-      Serial.println(j);              
-      j = j + fadeDirection;                        // increment the brightness value
+      strip.setBrightness(brightness);              // set the strip brightness
+ //     Serial.print("brightness is: ");
+ //     Serial.println(brightness);              
+      brightness = brightness + fadeDirection;      // increment the brightness value
       delay(fadeStep);
   
-      if (j < 20 || j >= 255) {                     // If the brightness value has gone past its limits...
+      if (brightness < 20 || brightness >= 255) {   // If the brightness value has gone past its limits...
         fadeDirection = fadeDirection * -1;         // change the direction...
         delay(600);
-        j = j + fadeDirection;                      // ...and start back.
+        brightness = brightness + fadeDirection;    // ...and start back.
       }
     }
    
@@ -127,6 +129,12 @@ void solid(uint32_t c, uint8_t b = 255) {           // Sets all pixels to same c
 
 
 void loop() {
+
+if (millis() - now >= 1000) {
+  Serial.println(timer);
+  timer++;
+  now = millis();
+}
 
 switch2 = digitalRead(2);
 switch3 = digitalRead(3);
@@ -169,6 +177,9 @@ else if (switch9 == HIGH) {
 else {
   solid(off);
   }
+
+
+
 
 }
 
