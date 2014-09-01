@@ -69,8 +69,8 @@ delay(5);
 }
 
 //############################___ PULSE 2 ___################################
-void pulse2(uint32_t c, uint16_t fadeStep) {         // Adapted from zbootili's 'rainbowpulse' function: http://forum.arduino.cc/index.php?topic=226932.0
-  uint16_t i, j;
+void pulse2(uint32_t c, uint16_t fadeStep) {        // Adapted from zbootili's 'rainbowpulse' function: http://forum.arduino.cc/index.php?topic=226932.0
+  uint8_t i, j;
   //int fadeControl = 255;                          // will hold the current brightness level
   int fadeDirection = -1;                           // change sign to fade up or down
 
