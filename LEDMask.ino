@@ -43,6 +43,8 @@ void setup() {
   
 }
 
+
+//############################___ PULSE 1 ___################################
 void pulse(uint32_t c, int time = 2000) {       // Pulses full mask as one color. Default is 1 second per cycle - delay time is in MICROSECONDS!
   for (int i=0; i<strip.numPixels(); i++) {
     strip.setPixelColor(i, c);
@@ -66,7 +68,7 @@ delay(5);
 
 }
 
-
+//############################___ PULSE 2 ___################################
 void pulse2(uint32_t c, uint16_t fadeStep) {         // Adapted from zbootili's 'rainbowpulse' function: http://forum.arduino.cc/index.php?topic=226932.0
   uint16_t i, j;
   //int fadeControl = 255;                          // will hold the current brightness level
@@ -94,7 +96,7 @@ void pulse2(uint32_t c, uint16_t fadeStep) {         // Adapted from zbootili's 
 }
 
 
-
+//############################___ TWINKLE ___################################
 void twinkle(uint32_t c) {
   for (int j=0; j<1; j++) {                         // Only one cycle - loop() keeps it running
     for (int q=0; q < 3; q++) {
@@ -113,7 +115,7 @@ void twinkle(uint32_t c) {
 }
 
 
-
+//############################___ SOLID ___################################
 void solid(uint32_t c, uint8_t b = 255) {           // Sets all pixels to same color, solid on. Brightness defaults to full.
   brightness = b;
   for (int i=0; i<strip.numPixels(); i++) {
