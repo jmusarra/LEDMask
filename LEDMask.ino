@@ -78,25 +78,25 @@ void pulse2(uint32_t c, uint16_t fadeStep) {        // Adapted from zbootili's '
   int fadeDirection = -1;                           // change sign to fade up or down
 
  // for(j=brightness; j < 255; j++) {
-    for(i=0; i < strip.numPixels(); i++) {
+   while (1 == 1) { 
+    for(i=0; i <= strip.numPixels(); i++) {
       strip.setPixelColor(i, c);
-      strip.setBrightness(brightness);              // set the strip brightness
-      Serial.print("brightness is: ");
-      Serial.println(brightness);              
-      brightness = brightness + fadeDirection;      // increment the brightness value
-      delay(1);
-      //digitalWrite(13, LOW);
+    }
+       brightness = brightness + fadeDirection;      // increment the brightness value
+       strip.setBrightness(brightness);              // set the strip brightness             
   
       if (brightness < 20 || brightness >= 255) {   // If the brightness value has gone past its limits...
         fadeDirection = fadeDirection * -1;         // change the direction...
-        delay(600);
+        delay(60);
         brightness = brightness + fadeDirection;    // ...and start back.
       }
-    }
    
+   Serial.print("brightness is: ");
+      Serial.println(brightness); 
     strip.show();
 
 //  }
+}
 }
 
 //############################_____ PULSE 3 _____################################
