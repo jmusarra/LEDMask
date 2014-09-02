@@ -22,15 +22,15 @@ const uint32_t blue = strip.Color(0, 0, 255);
 const uint32_t off = strip.Color(0, 0, 0);
 uint8_t brightness = 255;
 
-int switch2 = 0;
-int switch3 = 0;
-int switch4 = 0;
-int switch7 = 0;
-int switch8 = 0;
-int switch9 = 0;
+uint8_t switch2 = 0;
+uint8_t switch3 = 0;
+uint8_t switch4 = 0;
+uint8_t switch7 = 0;
+uint8_t switch8 = 0;
+uint8_t switch9 = 0;
 
-uint16_t timer = 1;
-uint32_t now = millis();
+//uint16_t timer = 1;
+//uint32_t now = millis();
 
 void setup() {
   pinMode(2, INPUT);
@@ -39,8 +39,9 @@ void setup() {
   pinMode(7, INPUT);
   pinMode(8, INPUT);
   pinMode(9, INPUT);
+  pinMode(13, OUTPUT);
   strip.begin();
-  strip.setBrightness(brightness);
+  //strip.setBrightness(brightness);
   strip.show();           // Initialize all pixels to 'off'
   Serial.begin(9600);     // Useful for troubleshooting and debug - not needed for production version
   
@@ -76,14 +77,15 @@ void pulse2(uint32_t c, uint16_t fadeStep) {        // Adapted from zbootili's '
   uint8_t i, j;
   int fadeDirection = -1;                           // change sign to fade up or down
 
-  for(j=0; j < 256; j++) {
+ // for(j=brightness; j < 255; j++) {
     for(i=0; i < strip.numPixels(); i++) {
       strip.setPixelColor(i, c);
       strip.setBrightness(brightness);              // set the strip brightness
- //     Serial.print("brightness is: ");
- //     Serial.println(brightness);              
+      Serial.print("brightness is: ");
+      Serial.println(brightness);              
       brightness = brightness + fadeDirection;      // increment the brightness value
-      delay(fadeStep);
+      delay(1);
+      //digitalWrite(13, LOW);
   
       if (brightness < 20 || brightness >= 255) {   // If the brightness value has gone past its limits...
         fadeDirection = fadeDirection * -1;         // change the direction...
@@ -94,22 +96,46 @@ void pulse2(uint32_t c, uint16_t fadeStep) {        // Adapted from zbootili's '
    
     strip.show();
 
+//  }
+}
+
+//############################_____ PULSE 3 _____################################
+//############################___ WHY GOD WHY ___################################
+
+void pulse3() {
+for (uint8_t r1=0; r1<= 255; r1++) {
+  for (uint8_t i=0; i<=strip.numPixels(); i++) {
+  strip.setPixelColor(i, r1, 0, 0);
+  strip.show();
   }
 }
+
+delay(600);
+
+for (uint8_t r1=255; r1>= 0; r1--) {
+  for (uint8_t i=0; i<=strip.numPixels(); i++) {
+  strip.setPixelColor(i, r1, 0, 0);
+  }
+  strip.show();
+
+
+}
+}
+
 
 
 //############################___ TWINKLE ___################################
 void twinkle(uint32_t c) {
-  for (int j=0; j<1; j++) {                         // Only one cycle - loop() keeps it running
-    for (int q=0; q < 3; q++) {
-      for (int i=0; i < strip.numPixels(); i=i+3) {
+  for (uint8_t j=0; j<1; j++) {                         // Only one cycle - loop() keeps it running TODO: this makes no sense
+    for (uint8_t q=0; q < 3; q++) {
+      for (uint8_t i=0; i < strip.numPixels(); i=i+3) {
         strip.setPixelColor(i+q, c);                //turn every third pixel on
       }
       strip.show();
      
       delay(300);
      
-      for (int i=0; i < strip.numPixels(); i=i+3) {
+      for (uint8_t i=0; i < strip.numPixels(); i=i+3) {
         strip.setPixelColor(i+q, 0);                //turn every third pixel off
       }
     }
@@ -127,14 +153,15 @@ void solid(uint32_t c, uint8_t b = 255) {           // Sets all pixels to same c
     strip.show();
 }
 
-
+//############################___ MAIN LOOP ___################################
 void loop() {
 
-if (millis() - now >= 1000) {
+/*if (millis() - now >= 1000) {
+  now = millis();
   Serial.println(timer);
   timer++;
-  now = millis();
 }
+*/
 
 switch2 = digitalRead(2);
 switch3 = digitalRead(3);
@@ -175,7 +202,7 @@ else if (switch9 == HIGH) {
   }
 
 else {
-  solid(off);
+pulse2(white, 2);
   }
 
 
