@@ -91,8 +91,8 @@ void pulse2(uint32_t c, uint16_t fadeStep) {        // Adapted from zbootili's '
         brightness = brightness + fadeDirection;    // ...and start back.
       }
    
-   Serial.print("brightness is: ");
-      Serial.println(brightness); 
+    // Serial.print("brightness is: ");
+    //  Serial.println(brightness); 
     strip.show();
 
 //  }
