@@ -9,7 +9,7 @@
 //   NEO_KHZ400  400 KHz (classic 'v1' (not v2) FLORA pixels, WS2811 drivers)
 //   NEO_GRB     Pixels are wired for GRB bitstream (most NeoPixel products)
 //   NEO_RGB     Pixels are wired for RGB bitstream (v1 FLORA pixels, not v2)
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(96, PIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(105, PIN, NEO_GRB + NEO_KHZ800);
 
 // IMPORTANT: To reduce NeoPixel burnout risk, add 1000 uF capacitor across
 // pixel power leads, add 300 - 500 Ohm resistor on first pixel's data input
@@ -78,7 +78,7 @@ void pulse2(uint32_t c, uint16_t fadeStep) {        // Adapted from zbootili's '
   int fadeDirection = -1;                           // change sign to fade up or down
 
  // for(j=brightness; j < 255; j++) {
-   while (1 == 1) { 
+   while (digitalRead(8) == 1) { 
     for(i=0; i <= strip.numPixels(); i++) {
       strip.setPixelColor(i, c);
     }
@@ -303,4 +303,3 @@ uint32_t Wheel(byte WheelPos) {
 }
 
 */
-
