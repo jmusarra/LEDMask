@@ -21,8 +21,8 @@ const uint32_t red = strip.Color(255, 0, 0);
 const uint32_t blue = strip.Color(0, 0, 255);
 const uint32_t off = strip.Color(0, 0, 0);
 uint8_t brightness = 255;
-uint8_t dimPin = 0;
-uint8_t potLevel = 0;  // doesn't need to be global?
+uint8_t dimPin = 1;
+uint8_t potLevel = 0;      // doesn't need to be global?
 uint8_t oldLevel = 0;
 float scale = 1.0;
 uint8_t dimLevel;
@@ -43,33 +43,29 @@ void setup() {
   pinMode(7, INPUT);
   pinMode(8, INPUT);
   pinMode(9, INPUT);
-  pinMode(13, OUTPUT);
+  //pinMode(13, OUTPUT);
   checkPot();
   strip.begin();
-  //strip.setBrightness(brightness);
-  strip.show();           // Initialize all pixels to 'off'
-  Serial.begin(9600);     // Useful for troubleshooting and debug - not needed for production version
+  strip.setBrightness(dimLevel);
+  strip.show();                    // Initialize all pixels to 'off'
+  // Serial.begin(9600);           // Useful for troubleshooting and debug - not needed for production version
   
 }
 
 
 uint8_t checkPot() {
-  potLevel = map(analogRead(dimPin), 0, 1023, 1, 100);  // set dimmer level to number between 1 and 100
+  potLevel = map(analogRead(dimPin), 0, 1023, 1, 100);   // set dimmer level to number between 1 and 100
   if ((potLevel > oldLevel + 2) || (potLevel < oldLevel - 2)) {
-    oldLevel = potLevel; // store this so we can see if it's changed
-    scale = potLevel * 0.01; // convert level into decimal
-    dimLevel = 250 * scale;  // and then dimLevel is what we use in setBrightness()
-    return scale;
+    oldLevel = potLevel;                                 // store this so we can see if it's changed
+    scale = potLevel * 0.01;                             // convert level into decimal
+    dimLevel = 250 * scale;                              // and then dimLevel is what we use in setBrightness()
     return dimLevel;
-    }
-    else {
-      return oldLevel;
     }
 }
 
 
 void pulse(uint32_t c) {
-  uint8_t i, j, k;
+  uint8_t i, j;
   checkPot();
   int w = (map(dimLevel, 2, 250, 20, 1));
   
@@ -142,16 +138,15 @@ void twinkle(uint32_t c) {
       delay(300);
      
       for (uint8_t i=0; i < strip.numPixels(); i=i+3) {
-        strip.setPixelColor(i+q, 0);                //turn every third pixel off
+        strip.setPixelColor(i+q, 0);                     //turn every third pixel off
       }
     }
-//  }
 }
 
 
 
 //############################___ SOLID ___################################
-void solid(uint32_t c) {           // Sets all pixels to same color, solid on. Brightness defaults to full.
+void solid(uint32_t c) {           // Sets all pixels to same color, solid on.
   checkPot();
   for (int i=0; i<strip.numPixels(); i++) {
     strip.setPixelColor(i, c);
