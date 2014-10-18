@@ -67,7 +67,7 @@ uint8_t checkPot() {
 void pulse(uint32_t c) {
   uint8_t i, j;
   checkPot();
-  float w = (map(dimLevel, 2, 250, 20, 1));
+  float w = (map(dimLevel, 2, 250, 15, 1));
   
   for (i = 0; i <= strip.numPixels(); i++) {
     strip.setPixelColor(i, c);
@@ -88,45 +88,11 @@ void pulse(uint32_t c) {
 }
 
 
-/* THIS IS STUPID AND OVERCOMPLICATED AND I'M GLAD IT'S DEAD
-
-//############################___ PULSE ___################################
-void pulse2(uint32_t c, uint16_t fadeStep) {        // Adapted from zbootili's 'rainbowpulse' function: http://forum.arduino.cc/index.php?topic=226932.0
-  uint8_t i, j;
-  uint8_t b = dimLevel;
-  int fadeDirection = -1;                          // change sign to fade up or down
-   
-//   while (digitalRead(8) == 1) { 
-    while (1==1) {
-    for(i=0; i <= strip.numPixels(); i++) {
-      strip.setPixelColor(i, c);
-    }
-       b = b + fadeDirection;      // increment the brightness value
-       strip.setBrightness(b);              // set the strip brightness             
-       checkPot();
-       //int w = map(dimLevel, 2.5, 250, 50, 1);
-       delay(1);
-      if (b < 5 || b >= dimLevel) {       // If the brightness value has gone past its limits...
-        fadeDirection = fadeDirection * -1;         // change the direction...
-        delay(60);
-        b = b + fadeDirection;    // ...and start back.
-      }
-    //checkPot();
-    //brightness = dimLevel;
-    strip.show();
-
-//  }
-}
-}
-
-*/
-
-
 
 
 //############################___ TWINKLE ___################################
 void twinkle(uint32_t c) {
-
+//TODO: reduce brightness of white twinkle
   checkPot();
     for (uint8_t q=0; q < 3; q++) {
       strip.setBrightness(dimLevel);
